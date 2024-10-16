@@ -6,13 +6,6 @@ const router = express.Router();
 // POST /courses - Create a new course (Instructors only)
 // POST /courses - Create a new course (Instructors only)
 router.post("/", authenticateJWT, async (req, res) => {
-  // Check if the user has the role of "instructor"
-  if (req.user.role !== "instructor") {
-    return res
-      .status(403)
-      .json({ message: "Access denied. Only instructors can create courses." });
-  }
-
   try {
     const { title, description, category, modules } = req.body;
 
@@ -46,13 +39,6 @@ router.get("/", async (req, res) => {
 
 // PUT /courses/:id - Update course information (Instructors only)
 router.put("/:id", authenticateJWT, async (req, res) => {
-  // Check if the user has the role of "instructor"
-  if (req.user.role !== "instructor") {
-    return res
-      .status(403)
-      .json({ message: "Access denied. Only instructors can update courses." });
-  }
-
   try {
     const { title, description, modules } = req.body;
     const updatedCourse = await Course.findByIdAndUpdate(
@@ -70,13 +56,6 @@ router.put("/:id", authenticateJWT, async (req, res) => {
 
 // DELETE /courses/:id - Delete a course (Instructors or Admin only)
 router.delete("/:id", authenticateJWT, async (req, res) => {
-  // Check if the user has the role of "instructor" or "admin"
-  if (req.user.role !== "instructor" && req.user.role !== "admin") {
-    return res.status(403).json({
-      message: "Access denied. Only instructors or admins can delete courses.",
-    });
-  }
-
   try {
     const deletedCourse = await Course.findByIdAndDelete(req.params.id);
     if (!deletedCourse)
