@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-//Define Course Module
+// Define the course module schema
 const moduleSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -15,7 +15,7 @@ const moduleSchema = new mongoose.Schema({
   },
 });
 
-//Define the course Schema
+// Define the course schema
 const courseSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -29,7 +29,7 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  modules: [moduleSchema],
+  modules: [moduleSchema], // Array of course modules
   instructor: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
