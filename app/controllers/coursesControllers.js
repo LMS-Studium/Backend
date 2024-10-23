@@ -3,15 +3,16 @@ const Course = require("../models/CourseSchema");
 // Create a new course (Instructors only)
 exports.createCourse = async (req, res) => {
   try {
-    const { title, description, category, modules } = req.body;
+    const { title, price, category } = req.body;
 
     const newCourse = new Course({
       title,
-      description,
       category,
-      modules,
+      price,
       instructor: req.user._id, // Add the instructor's ID from JWT
     });
+
+    console.log(title, category, price);
 
     await newCourse.save();
     res.status(201).json(newCourse);
